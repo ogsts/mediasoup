@@ -85,6 +85,12 @@ namespace RTC
 			  RTC::Transport* transport, RTC::Consumer* consumer) = 0;
 			virtual void OnTransportConsumerKeyFrameRequested(
 			  RTC::Transport* transport, RTC::Consumer* consumer, uint32_t mappedSsrc) = 0;
+
+			//===================================================
+			// Karlis
+			//===================================================
+			virtual void OnTransportConsumerAvailableBitrate(RTC::Transport* transport, RTC::Consumer* consumer, uint32_t mappedSsrc, uint32_t bitrate) = 0;
+
 			virtual void OnTransportNewDataProducer(
 			  RTC::Transport* transport, RTC::DataProducer* dataProducer) = 0;
 			virtual void OnTransportDataProducerClosed(
@@ -192,7 +198,14 @@ namespace RTC
 	public:
 		void OnConsumerSendRtpPacket(RTC::Consumer* consumer, RTC::RtpPacket* packet) override;
 		void OnConsumerRetransmitRtpPacket(RTC::Consumer* consumer, RTC::RtpPacket* packet) override;
+
+
 		void OnConsumerKeyFrameRequested(RTC::Consumer* consumer, uint32_t mappedSsrc) override;
+		//===========================================
+		// Karlis
+		//===========================================
+		void OnConsumerAvailableBitrate(RTC::Consumer* consumer, uint32_t mappedSsrc, uint32_t bitrate) override;
+
 		void OnConsumerNeedBitrateChange(RTC::Consumer* consumer) override;
 		void OnConsumerNeedZeroBitrate(RTC::Consumer* consumer) override;
 		void OnConsumerProducerClosed(RTC::Consumer* consumer) override;

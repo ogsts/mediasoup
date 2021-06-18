@@ -54,6 +54,11 @@ namespace RTC
 		void ReceiveRtxRtcpSenderReport(RTC::RTCP::SenderReport* report);
 		void ReceiveRtcpXrDelaySinceLastRr(RTC::RTCP::DelaySinceLastRr::SsrcInfo* ssrcInfo);
 		void RequestKeyFrame();
+		//================================
+		// Karlis
+		//================================
+		void SendAvailableBitrate(uint32_t bitrate);
+		// Karlis
 		void Pause() override;
 		void Resume() override;
 		uint32_t GetBitrate(uint64_t nowMs) override

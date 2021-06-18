@@ -819,6 +819,23 @@ namespace RTC
 		producer->RequestKeyFrame(mappedSsrc);
 	}
 
+	//=====================================================
+	//
+	//=====================================================
+	inline void Router::OnTransportConsumerAvailableBitrate(
+	  RTC::Transport* /*transport*/, RTC::Consumer* consumer, uint32_t mappedSsrc, uint32_t bitrate)
+	{
+		MS_TRACE();
+
+		MS_DEBUG_TAG(rtcp, "#-> Router::%s consumer=%s  outgoing available bitrate:%" PRIu32,__func__, consumer->id.c_str(), bitrate );
+
+		auto* producer = this->mapConsumerProducer.at(consumer);
+		producer->SendAvailableBitrate(mappedSsrc, bitrate);
+
+		MS_DEBUG_TAG(rtcp, "<-# Router::%s consumer=%s  outgoing available bitrate:%" PRIu32,__func__, consumer->id.c_str(), bitrate );
+	}
+
+
 	inline void Router::OnTransportNewDataProducer(
 	  RTC::Transport* /*transport*/, RTC::DataProducer* dataProducer)
 	{

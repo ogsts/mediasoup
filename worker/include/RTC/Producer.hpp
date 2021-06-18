@@ -123,7 +123,10 @@ namespace RTC
 		void ReceiveRtcpXrDelaySinceLastRr(RTC::RTCP::DelaySinceLastRr::SsrcInfo* ssrcInfo);
 		void GetRtcp(RTC::RTCP::CompoundPacket* packet, uint64_t nowMs);
 		void RequestKeyFrame(uint32_t mappedSsrc);
-
+		//=======================================================
+		// Karlis
+		//=======================================================
+		void SendAvailableBitrate(uint32_t mappedSsrc, uint32_t bitrate);
 	private:
 		RTC::RtpStreamRecv* GetRtpStream(RTC::RtpPacket* packet);
 		RTC::RtpStreamRecv* CreateRtpStream(
@@ -149,7 +152,6 @@ namespace RTC
 		/* Pure virtual methods inherited from RTC::KeyFrameRequestManager::Listener. */
 	public:
 		void OnKeyFrameNeeded(RTC::KeyFrameRequestManager* keyFrameRequestManager, uint32_t ssrc) override;
-
 	public:
 		// Passed by argument.
 		const std::string id;

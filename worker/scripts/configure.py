@@ -15,6 +15,8 @@ script_dir = os.path.dirname(__file__)
 root = os.path.normpath(os.path.join(script_dir, '..'))
 output_dir = os.environ.get('MEDIASOUP_OUT_DIR', os.path.join(os.path.abspath(root), 'out'))
 
+print os.environ
+
 sys.path.insert(0, os.path.join(root, 'deps', 'gyp', 'pylib'))
 try:
     import gyp
@@ -92,7 +94,11 @@ if __name__ == '__main__':
         args.append('-Dhost_arch=%s' % host_arch())
 
     if not any(a.startswith('-Dtarget_arch=') for a in args):
-        args.append('-Dtarget_arch=%s' % host_arch())
+        target_arch='arm64'
+        pwd = os.environ.get('PWD')
+        if(pwd.find('amd64') != -1):
+	     target_arch='amd64'
+        args.append('-Dtarget_arch=%s' % target_arch)
 
     if any(a.startswith('-Dopenssl_fips=') for a in args):
         fips_fn = os.path.join(os.path.abspath(root), 'fips.gypi')

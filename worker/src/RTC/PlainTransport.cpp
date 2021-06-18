@@ -651,6 +651,8 @@ namespace RTC
 		if (HasSrtp() && !this->srtpSendSession->EncryptRtcp(&data, &len))
 			return;
 
+		//MS_DEBUG_TAG(rtcp, "    PlainTransport::%s    >>>>>>>>>>>>>>>>>>>>> ",__func__);
+
 		if (this->rtcpMux)
 			this->tuple->Send(data, len);
 		else if (this->rtcpTuple)
@@ -672,6 +674,8 @@ namespace RTC
 
 		if (HasSrtp() && !this->srtpSendSession->EncryptRtcp(&data, &len))
 			return;
+
+		//MS_DEBUG_TAG(rtcp, "    PlainTransport::%s    >>>>>>>>>>>>>>>>>>>>> ",__func__);
 
 		if (this->rtcpMux)
 			this->tuple->Send(data, len);

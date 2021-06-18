@@ -824,6 +824,45 @@ namespace RTC
 		this->keyFrameRequestManager->KeyFrameNeeded(ssrc);
 	}
 
+	//=================================================================
+	// Karlis
+	//=================================================================
+	void Producer::SendAvailableBitrate(uint32_t mappedSsrc, uint32_t bitrate) {
+		MS_TRACE();
+		MS_DEBUG_TAG(rtcp, "#-> Producer::%s id=%s   >>>>>>>>>>>>>>> outgoing available bitrate:%" PRIu32,__func__, id.c_str(), bitrate );
+		/*
+		auto it = this->mapMappedSsrcSsrc.find(mappedSsrc);
+		if (it == this->mapMappedSsrcSsrc.end())
+		{
+			MS_WARN_2TAGS(rtcp, rtx, "<-# Producer::%s id=%s given mappedSsrc not found, ignoring",__func__, id.c_str());
+			return;
+		}
+
+		uint32_t ssrc = it->second;
+
+		auto its = this->mapSsrcRtpStream.find(ssrc);
+		if (its == this->mapSsrcRtpStream.end())
+		{
+			MS_WARN_2TAGS(rtcp, rtx, "<-# Producer::%s id=%s no associated RtpStream found [ssrc:%" PRIu32 "]",__func__, id.c_str(), ssrc);
+			return;
+		}
+		*/
+
+		auto its = this->mapSsrcRtpStream.begin();
+		if (its == this->mapSsrcRtpStream.end())
+		{
+			MS_WARN_2TAGS(rtcp, rtx, "<-# Producer::%s id=%s no associated RtpStream found ",__func__, id.c_str());
+			return;
+		}
+
+
+		auto* rtpStream = its->second;
+
+		rtpStream->SendAvailableBitrate(bitrate);
+		MS_DEBUG_TAG(rtcp, "<-# Producer::%s id=%s   >>>>>>>>>>>>>>> outgoing available bitrate:%" PRIu32,__func__, id.c_str(), bitrate );
+	}
+
+
 	RTC::RtpStreamRecv* Producer::GetRtpStream(RTC::RtpPacket* packet)
 	{
 		MS_TRACE();
