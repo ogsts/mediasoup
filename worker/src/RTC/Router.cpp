@@ -827,12 +827,12 @@ namespace RTC
 	{
 		MS_TRACE();
 
-		MS_DEBUG_TAG(rtcp, "#-> Router::%s consumer=%s  outgoing available bitrate:%" PRIu32,__func__, consumer->id.c_str(), bitrate );
+		//MS_DEBUG_TAG(rtcp, "#-> Router::%s consumer=%s  outgoing available bitrate:%" PRIu32,__func__, consumer->id.c_str(), bitrate );
 
 		auto* producer = this->mapConsumerProducer.at(consumer);
 		producer->SendAvailableBitrate(mappedSsrc, bitrate);
 
-		MS_DEBUG_TAG(rtcp, "<-# Router::%s consumer=%s  outgoing available bitrate:%" PRIu32,__func__, consumer->id.c_str(), bitrate );
+		//MS_DEBUG_TAG(rtcp, "<-# Router::%s consumer=%s  outgoing available bitrate:%" PRIu32,__func__, consumer->id.c_str(), bitrate );
 	}
 
 

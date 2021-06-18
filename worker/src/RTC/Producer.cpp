@@ -829,7 +829,7 @@ namespace RTC
 	//=================================================================
 	void Producer::SendAvailableBitrate(uint32_t mappedSsrc, uint32_t bitrate) {
 		MS_TRACE();
-		MS_DEBUG_TAG(rtcp, "#-> Producer::%s id=%s   >>>>>>>>>>>>>>> outgoing available bitrate:%" PRIu32 "  mapSsrcRtpStream.size=%zu ",__func__, id.c_str(), bitrate, this->mapSsrcRtpStream.size() );
+		//MS_DEBUG_TAG(rtcp, "#-> Producer::%s id=%s   >>>>>>>>>>>>>>> outgoing available bitrate:%" PRIu32 "  mapSsrcRtpStream.size=%zu ",__func__, id.c_str(), bitrate, this->mapSsrcRtpStream.size() );
 		/*
 		auto it = this->mapMappedSsrcSsrc.find(mappedSsrc);
 		if (it == this->mapMappedSsrcSsrc.end())
@@ -859,7 +859,7 @@ namespace RTC
 		auto* rtpStream = its->second;
 
 		rtpStream->SendAvailableBitrate(bitrate);
-		MS_DEBUG_TAG(rtcp, "<-# Producer::%s id=%s   >>>>>>>>>>>>>>> outgoing available bitrate:%" PRIu32,__func__, id.c_str(), bitrate );
+		//MS_DEBUG_TAG(rtcp, "<-# Producer::%s id=%s   >>>>>>>>>>>>>>> outgoing available bitrate:%" PRIu32,__func__, id.c_str(), bitrate );
 	}
 
 
