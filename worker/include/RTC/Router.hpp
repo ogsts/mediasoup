@@ -73,6 +73,8 @@ namespace RTC
 		void OnTransportConsumerProducerClosed(RTC::Transport* transport, RTC::Consumer* consumer) override;
 		void OnTransportConsumerKeyFrameRequested(
 		  RTC::Transport* transport, RTC::Consumer* consumer, uint32_t mappedSsrc) override;
+		void OnTransportConsumerAvailableBitrate(
+		  RTC::Transport* transport, RTC::Consumer* consumer, uint32_t mappedSsrc, uint32_t bitrate) override;
 		void OnTransportNewDataProducer(RTC::Transport* transport, RTC::DataProducer* dataProducer) override;
 		void OnTransportDataProducerClosed(RTC::Transport* transport, RTC::DataProducer* dataProducer) override;
 		void OnTransportDataProducerMessageReceived(

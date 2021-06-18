@@ -2290,6 +2290,7 @@ namespace RTC
 
 				consumer->GetRtcp(packet.get(), rtpStream, nowMs);
 
+				// MS_DEBUG_TAG(rtcp, "    Transport::%s T:%s  consumer %s >>>>>>>>>>>>>>>>>>>>>",__func__, id.c_str(), consumer->id.c_str() );
 				// Send the RTCP compound packet if there is a sender report.
 				if (packet->HasSenderReport())
 				{
@@ -2307,6 +2308,7 @@ namespace RTC
 			auto* producer = kv.second;
 
 			producer->GetRtcp(packet.get(), nowMs);
+			//MS_DEBUG_TAG(rtcp, "    Transport::%s  T:%s  producer %s >>>>>>>>>>>>>>>>>>>>>",__func__, id.c_str(), producer->id.c_str() );
 
 			// One more RR would exceed the MTU, send the compound packet now.
 			if (packet->GetSize() + sizeof(RTCP::ReceiverReport::Header) > RTC::MtuSize)
@@ -2693,6 +2695,17 @@ namespace RTC
 		this->listener->OnTransportConsumerKeyFrameRequested(this, consumer, mappedSsrc);
 	}
 
+	inline void Transport::OnConsumerAvailableBitrate(RTC::Consumer* consumer, uint32_t mappedSsrc, uint32_t bitrate)
+	{
+		MS_TRACE();
+		if (!IsConnected())
+		{
+			MS_WARN_TAG(rtcp, "ignoring key rame request (transport not connected)");
+			return;
+		}
+		this->listener->OnTransportConsumerAvailableBitrate(this, consumer, mappedSsrc, bitrate);
+	}
+
 	inline void Transport::OnConsumerNeedBitrateChange(RTC::Consumer* /*consumer*/)
 	{
 		MS_TRACE();
@@ -2932,13 +2945,22 @@ namespace RTC
 	{
 		MS_TRACE();
 
-		MS_DEBUG_DEV("outgoing available bitrate:%" PRIu32, bitrates.availableBitrate);
+		//MS_DEBUG_TAG(rtcp, "#-> Transport::%s id=%s   >>>>>>>>>>>>>>> outgoing available bitrate:%" PRIu32 "  consumers=%zu",__func__, id.c_str(), bitrates.availableBitrate, this->mapConsumers.size(), this->mapProducers.size() );
+		//MS_DEBUG_DEV("outgoing available bitrate:%" PRIu32, bitrates.availableBitrate);
+
+		for (auto& kv : this->mapConsumers)
+		{
+			auto* consumer      = kv.second;
+			uint32_t mappedSsrc = 0;//consumer->consumableRtpEncodings[0].ssrc;
+			OnConsumerAvailableBitrate(consumer, mappedSsrc, (bitrates.availableBitrate / this->mapConsumers.size()) );
+		}
 
 		DistributeAvailableOutgoingBitrate();
 		ComputeOutgoingDesiredBitrate();
 
 		// May emit 'trace' event.
 		EmitTraceEventBweType(bitrates);
+		//MS_DEBUG_TAG(rtcp, "<-# Transport::%s id=%s   <<<<<<<<<<<<<<< outgoing available bitrate:%" PRIu32,__func__, id.c_str(), bitrates.availableBitrate );
 	}
 
 	inline void Transport::OnTransportCongestionControlClientSendRtpPacket(
@@ -2948,6 +2970,7 @@ namespace RTC
 	{
 		MS_TRACE();
 
+		// MS_DEBUG_TAG(rtcp, "    Transport::%s    >>>>>>>>>>>>>>>>>>>>> ",__func__ );
 		// Update abs-send-time if present.
 		packet->UpdateAbsSendTime(DepLibUV::GetTimeMs());
 

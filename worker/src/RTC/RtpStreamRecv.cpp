@@ -5,6 +5,7 @@
 #include "Logger.hpp"
 #include "Utils.hpp"
 #include "RTC/Codecs/Tools.hpp"
+#include "RTC/RTCP/FeedbackPsRemb.hpp"
 
 namespace RTC
 {
@@ -611,6 +612,16 @@ namespace RTC
 			// Notify the listener.
 			static_cast<RTC::RtpStreamRecv::Listener*>(this->listener)->OnRtpStreamSendRtcpPacket(this, &packet);
 		}
+	}
+
+	void RtpStreamRecv::SendAvailableBitrate(uint32_t bitrate)
+	{
+		//MS_DEBUG_2TAGS(rtcp, rtx, "#-> RtpStreamRecv::%s sending AVAILABLE BITRATE [ssrc:%" PRIu32 "]", __func__, GetSsrc());
+		RTC::RTCP::FeedbackPsRembPacket packet(GetSsrc(), GetSsrc());
+		packet.SetBitrate(bitrate);
+		packet.Serialize(RTC::RTCP::Buffer);
+		static_cast<RTC::RtpStreamRecv::Listener*>(this->listener)->OnRtpStreamSendRtcpPacket(this, &packet);
+		//MS_DEBUG_2TAGS(rtcp, rtx, "<-# RtpStreamRecv::%s sending AVAILABLE BITRATE [ssrc:%" PRIu32 "]", __func__, GetSsrc());
 	}
 
 	void RtpStreamRecv::Pause()

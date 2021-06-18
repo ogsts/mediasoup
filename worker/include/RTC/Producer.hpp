@@ -123,7 +123,7 @@ namespace RTC
 		void ReceiveRtcpXrDelaySinceLastRr(RTC::RTCP::DelaySinceLastRr::SsrcInfo* ssrcInfo);
 		void GetRtcp(RTC::RTCP::CompoundPacket* packet, uint64_t nowMs);
 		void RequestKeyFrame(uint32_t mappedSsrc);
-
+		void SendAvailableBitrate(uint32_t mappedSsrc, uint32_t bitrate);
 	private:
 		RTC::RtpStreamRecv* GetRtpStream(RTC::RtpPacket* packet);
 		RTC::RtpStreamRecv* CreateRtpStream(
