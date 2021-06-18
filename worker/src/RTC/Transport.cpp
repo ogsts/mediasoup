@@ -2950,7 +2950,7 @@ namespace RTC
 	{
 		MS_TRACE();
 
-		MS_DEBUG_TAG(rtcp, "#-> Transport::%s id=%s   >>>>>>>>>>>>>>> outgoing available bitrate:%" PRIu32,__func__, id.c_str(), bitrates.availableBitrate );
+		MS_DEBUG_TAG(rtcp, "#-> Transport::%s id=%s   >>>>>>>>>>>>>>> outgoing available bitrate:%" PRIu32 "  consumers=%zu",__func__, id.c_str(), bitrates.availableBitrate, this->mapConsumers.size(), this->mapProducers.size() );
 		//MS_DEBUG_DEV("outgoing available bitrate:%" PRIu32, bitrates.availableBitrate);
 
 		// Karlis
@@ -2958,7 +2958,7 @@ namespace RTC
 		{
 			auto* consumer      = kv.second;
 			uint32_t mappedSsrc = 0;//consumer->consumableRtpEncodings[0].ssrc;
-			OnConsumerAvailableBitrate(consumer, mappedSsrc, bitrates.availableBitrate / 25 );
+			OnConsumerAvailableBitrate(consumer, mappedSsrc, bitrates.availableBitrate );
 		}
 
 		DistributeAvailableOutgoingBitrate();
