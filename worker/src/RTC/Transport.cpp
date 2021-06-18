@@ -2958,7 +2958,7 @@ namespace RTC
 		{
 			auto* consumer      = kv.second;
 			uint32_t mappedSsrc = 0;//consumer->consumableRtpEncodings[0].ssrc;
-			OnConsumerAvailableBitrate(consumer, mappedSsrc, bitrates.availableBitrate );
+			OnConsumerAvailableBitrate(consumer, mappedSsrc, (bitrates.availableBitrate / this->mapConsumers.size()) );
 		}
 
 		DistributeAvailableOutgoingBitrate();

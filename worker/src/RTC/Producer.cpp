@@ -858,8 +858,8 @@ namespace RTC
 
 		auto* rtpStream = its->second;
 
-		rtpStream->SendAvailableBitrate(bitrate / this->mapSsrcRtpStream.size());
-		MS_DEBUG_TAG(rtcp, "<-# Producer::%s id=%s   >>>>>>>>>>>>>>> outgoing available bitrate:%" PRIu32,__func__, id.c_str(), (bitrate / this->mapSsrcRtpStream.size()) );
+		rtpStream->SendAvailableBitrate(bitrate);
+		MS_DEBUG_TAG(rtcp, "<-# Producer::%s id=%s   >>>>>>>>>>>>>>> outgoing available bitrate:%" PRIu32,__func__, id.c_str(), bitrate );
 	}
 
 
